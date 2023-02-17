@@ -23,6 +23,7 @@ export default class World extends EventEmitter {
     this.theme.on("switch", (theme) => {
       this.switchTheme(theme);
     });
+    this.loader();
 
     this.resources.on("ready", () => {
       this.floor = new Floor();
@@ -30,6 +31,13 @@ export default class World extends EventEmitter {
       this.lights = new Lights();
       this.emit("worldready");
       this.controls = new Controls();
+    });
+  }
+
+  loader() {
+    this.loaderText = document.querySelector(".loader");
+    this.resources.on("ready", () => {
+      this.loaderText.innerHTML = "";
     });
   }
 

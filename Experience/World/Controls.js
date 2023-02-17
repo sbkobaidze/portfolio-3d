@@ -97,7 +97,7 @@ export default class Controls {
       });
       this.firstMoveTimeline.to(this.room.actualRoom.position, {
         x: () => {
-          return this.sizes.width * 0.00197;
+          return this.sizes.width * 0.0016;
         },
       });
 

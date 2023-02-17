@@ -18,6 +18,13 @@
   --color-background-dark: #8395cd;
 }
 
+.loader {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 45%;
+}
+
 .light-theme {
   --color-blocks: var(--color-text-light);
 
