@@ -21,60 +21,63 @@ export default class Controls {
       }
     });
 
+    this.circleFirst = this.experience.world.floor.circle;
+    this.circleSecond = this.experience.world.floor.circle2;
+    this.circleThird = this.experience.world.floor.circle3;
+
     GSAP.registerPlugin(ScrollTrigger);
-    // this.setSmoothScroll();
+    this.setSmoothScroll();
 
     this.setScrollTrigger();
   }
 
-  // setSmoothScroll() {
-  //   this.assscroll = this.setupASScroll();
-  // }
+  setSmoothScroll() {
+    this.asscroll = this.setupASScroll();
+  }
 
-  // setupASScroll() {
-  //   // https://github.com/ashthornton/asscroll
-  //   const asscroll = new ASScroll({
-  //     ease: 0.1,
-  //     disableRaf: true,
-  //   });
+  setupASScroll() {
+    // https://github.com/ashthornton/asscroll
+    const asscroll = new ASScroll({
+      ease: 0.1,
+      disableRaf: true,
+    });
 
-  //   GSAP.ticker.add(asscroll.update);
+    GSAP.ticker.add(asscroll.update);
 
-  //   ScrollTrigger.defaults({
-  //     scroller: asscroll.containerElement,
-  //   });
+    ScrollTrigger.defaults({
+      scroller: asscroll.containerElement,
+    });
 
-  //   ScrollTrigger.scrollerProxy(asscroll.containerElement, {
-  //     scrollTop(value) {
-  //       if (arguments.length) {
-  //         asscroll.currentPos = value;
-  //         return;
-  //       }
-  //       return asscroll.currentPos;
-  //     },
-  //     getBoundingClientRect() {
-  //       return {
-  //         top: 0,
-  //         left: 0,
-  //         width: window.innerWidth,
-  //         height: window.innerHeight,
-  //       };
-  //     },
-  //     fixedMarkers: true,
-  //   });
+    ScrollTrigger.scrollerProxy(asscroll.containerElement, {
+      scrollTop(value) {
+        if (arguments.length) {
+          asscroll.currentPos = value;
+          return;
+        }
+        return asscroll.currentPos;
+      },
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+      },
+    });
 
-  //   asscroll.on("update", ScrollTrigger.update);
-  //   ScrollTrigger.addEventListener("refresh", asscroll.resize);
+    asscroll.on("update", ScrollTrigger.update);
+    ScrollTrigger.addEventListener("refresh", asscroll.resize);
 
-  //   requestAnimationFrame(() => {
-  //     asscroll.enable({
-  //       newScrollElements: document.querySelectorAll(
-  //         ".gsap-marker-start, .gsap-marker-end, [asscroll]"
-  //       ),
-  //     });
-  //   });
-  //   return asscroll;
-  // }
+    requestAnimationFrame(() => {
+      asscroll.enable({
+        newScrollElements: document.querySelectorAll(
+          ".gsap-marker-start, .gsap-marker-end, [asscroll]"
+        ),
+      });
+    });
+    return asscroll;
+  }
 
   setScrollTrigger() {
     let mm = GSAP.matchMedia();
@@ -159,7 +162,7 @@ export default class Controls {
     // Mobile
 
     mm.add("(max-width: 968px)", () => {
-      this.room.actualRoom.scale.set(0.25, 0.25, 0.25);
+      this.room.actualRoom.scale.set(0.2, 0.2, 0.2);
       this.firstMoveTimeline = new GSAP.timeline({
         scrollTrigger: {
           trigger: ".first-move",
@@ -283,11 +286,10 @@ export default class Controls {
       });
 
       this.room.actualRoom.children.forEach((child) => {
-        console.log(child);
         if (child.name === "Cube") {
           this.first = GSAP.to(child.position, {
-            x: -5.12022,
-            z: 2.92099,
+            x: -0.2,
+
             ease: "back.out(1.7)",
             duration: 0.3,
           });
@@ -295,9 +297,9 @@ export default class Controls {
 
         if (child.name === "Noot") {
           this.second = GSAP.to(child.scale, {
-            x: 0.5,
-            y: 0.5,
-            z: 0.5,
+            x: 1,
+            y: 1,
+            z: 1,
             ease: "back.out(1.7)",
 
             duration: 0.3,
@@ -306,6 +308,52 @@ export default class Controls {
       });
       this.secondPartTimeLine.add(this.first);
       this.secondPartTimeLine.add(this.second);
+
+      //Circle animations
+      this.firstMoveTimeline = new GSAP.timeline({
+        scrollTrigger: {
+          trigger: ".first-move",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: "0.6",
+          invalidateOnRefresh: true,
+        },
+      }).to(this.circleFirst.scale, {
+        x: 3,
+        y: 3,
+        z: 3,
+      });
+
+      //second section
+
+      this.secondMoveTimeline = new GSAP.timeline({
+        scrollTrigger: {
+          trigger: ".second-move",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: "0.6",
+          invalidateOnRefresh: true,
+        },
+      }).to(this.circleSecond.scale, {
+        x: 3,
+        y: 3,
+        z: 3,
+      });
+
+      // third move
+      this.thirdMoveTimeline = new GSAP.timeline({
+        scrollTrigger: {
+          trigger: ".third-move",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: "0.6",
+          invalidateOnRefresh: true,
+        },
+      }).to(this.circleThird.scale, {
+        x: 3,
+        y: 3,
+        z: 3,
+      });
     });
   }
 

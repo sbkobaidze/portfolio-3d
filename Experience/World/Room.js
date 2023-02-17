@@ -14,6 +14,7 @@ export default class Room {
 
     this.room = this.resources.items.room;
     this.actualRoom = this.room.scene;
+    this.roomChildren = {};
 
     this.lerp = {
       current: 0,
@@ -42,7 +43,7 @@ export default class Room {
   }
 
   setModel() {
-    console.log(this.actualRoom);
+    console.log(this.actualRoom.children);
     this.actualRoom.children.forEach((child) => {
       child.castShadow = true;
       child.receiveShadow = true;
@@ -67,7 +68,6 @@ export default class Room {
       }
 
       if (child.name === "Sea") {
-        console.log(child.position);
         child.children[0].material = new THREE.MeshPhysicalMaterial();
         child.children[0].material.roughness = 0;
         child.children[0].material.color.set(0x549dd2);
@@ -77,14 +77,13 @@ export default class Room {
       }
 
       if (child.name === "Cube") {
-        child.position.x = 2.97991;
-        child.position.z = 2.92099;
+        child.position.x = 2.17468;
       }
       if (child.name === "Noot") {
-        child.rotation.y = Math.PI / 8;
-        child.position.x = child.position.x + 0.2;
         child.scale.set(0, 0, 0);
       }
+
+      this.roomChildren[child.name.toLowerCase()] = child;
     });
     const width = 1;
     const height = 1;
@@ -103,6 +102,7 @@ export default class Room {
     this.rectLight.position.set(2.1936771869659424, 2.0, -3.297884464263916);
     this.rectLight.rotation.x = -Math.PI / 2;
     this.actualRoom.add(this.rectLight);
+    this.roomChildren["rectLight"] = this.rectLight;
 
     this.scene.add(this.actualRoom);
     this.actualRoom.rotation.y = Math.PI / 2 - 45;

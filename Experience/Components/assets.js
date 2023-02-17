@@ -2,7 +2,7 @@ export default [
   {
     name: "room",
     type: "glbModel",
-    path: "/models/finalzzzzz.glb",
+    path: "/models/room.glb",
   },
   {
     name: "video",

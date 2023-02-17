@@ -5,9 +5,11 @@ import Room from "./Room.js";
 import Lights from "./Lights.js";
 import Controls from "./Controls";
 import Floor from "./Floor.js";
+import { EventEmitter } from "events";
 
-export default class World {
+export default class World extends EventEmitter {
   constructor() {
+    super();
     this.experience = new Experience();
     this.sizes = this.experience.sizes;
     this.scene = this.experience.scene;
@@ -23,10 +25,11 @@ export default class World {
     });
 
     this.resources.on("ready", () => {
-      this.controls = new Controls();
       this.floor = new Floor();
       this.room = new Room();
       this.lights = new Lights();
+      this.emit("worldready");
+      this.controls = new Controls();
     });
   }
 

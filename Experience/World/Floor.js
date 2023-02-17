@@ -10,7 +10,7 @@ export default class Floor {
     this.scene = this.experience.scene;
 
     this.setFloor();
-    //this.setCircles();
+    this.setCircles();
   }
 
   setFloor() {
@@ -24,35 +24,33 @@ export default class Floor {
 
   resize() {}
 
-  // setCircles() {
-  //   const geometry = new THREE.CircleGeometry(5, 32);
-  //   const material = new THREE.MeshBasicMaterial({ color: 0xfaf4e5 });
-  //   this.material2 = new THREE.MeshStandardMaterial({ color: 0x7ad0a });
-  //   this.material3 = new THREE.MeshStandardMaterial({ color: 0x8395cd });
+  setCircles() {
+    const geometry = new THREE.CircleGeometry(5, 32);
+    const material = new THREE.MeshBasicMaterial({ color: 0xfaf4e5 });
+    this.material2 = new THREE.MeshStandardMaterial({ color: 0x7ad0a });
+    this.material3 = new THREE.MeshStandardMaterial({ color: 0xe5a1aa });
 
-  //   this.circle = new THREE.Mesh(geometry, material);
-  //   this.circle2 = new THREE.Mesh(geometry, material);
-  //   this.circle3 = new THREE.Mesh(geometry, material);
+    this.circle = new THREE.Mesh(geometry, material);
+    this.circle2 = new THREE.Mesh(geometry, this.material2);
+    this.circle3 = new THREE.Mesh(geometry, this.material3);
 
-  //   this.circle.position.y = -0.29;
-  //   this.circle2.position.y = -0.28;
-  //   this.circle3.position.y = -0.27;
-  //   this.circle.scale.set(0, 0, 0);
-  //   this.circle2.scale.set(0, 0, 0);
-  //   this.circle3.scale.set(0, 0, 0);
-  //   this.circle.rotation.x =
-  //     this.circle2.rotation.x =
-  //     this.circle3.rotation.x =
-  //       -Math.PI / 2;
-  //   this.circle.receiveShadow =
-  //     this.circle2.receiveShadow =
-  //     this.circle3.receiveShadow =
-  //       true;
+    this.circle.position.y = 0.1;
+    this.circle2.position.y = 0.11;
+    this.circle3.position.y = 0.12;
+    this.circle.scale.set(0, 0, 0);
+    this.circle2.scale.set(0, 0, 0);
+    this.circle3.scale.set(0, 0, 0);
+    this.circle.rotation.x =
+      this.circle2.rotation.x =
+      this.circle3.rotation.x =
+        -Math.PI / 2;
 
-  //   this.scene.add(this.circle);
-  //   this.scene.add(this.circle1);
-  //   this.scene.add(this.circle2);
-  // }
+    this.circle.receiveShadow = true;
+
+    this.scene.add(this.circle);
+    this.scene.add(this.circle2);
+    this.scene.add(this.circle3);
+  }
 
   update() {
     this.mixer.update(this.time.delta * 0.0009);
